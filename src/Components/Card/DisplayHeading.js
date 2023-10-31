@@ -41,7 +41,7 @@ const DisplayHeading = () => {
             bgcolor={themeColor[currTheme][0].questionpage}
             border={themeColor[currTheme][0].questionpageborder}
           >
-            <Topic color={themeColor[currTheme][0].heading}>Solution</Topic>
+            <Topic color={themeColor[currTheme][0].heading}>Hint</Topic>
           </Wrapper>
         </Grid>
         <Grid item lg={1} md={1} xs={1.5}>
