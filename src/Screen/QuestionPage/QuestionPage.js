@@ -1,4 +1,4 @@
-import { React } from "react";
+import React, { useState } from 'react';
 import DisplayHeading from "../../Components/Card/DisplayHeading";
 import Display from "../../Components/Card/Display";
 import AllQuestionList from "../../Data/AllQuestionsList.json";
@@ -8,10 +8,6 @@ import Footer from "../../Components/Footer/Footer";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import themeColor from "../../Data/themeColor.json";
 import { useSelector } from "react-redux";
-
-
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 
 function QuestionPage() {
   const currTheme = useSelector((state) => state.theme);
@@ -23,13 +19,17 @@ function QuestionPage() {
     return <div style={{ ...style, ...thumbStyle }} {...props} />;
   };
 
+  // Keep track of accepted solutions for specific items
+  const [acceptedSolutions, setAcceptedSolutions] = useState({});
+
+  const handleSolutionAccepted = (itemId) => {
+    // Update the acceptedSolutions state for the specific item
+    setAcceptedSolutions({ ...acceptedSolutions, [itemId]: true });
+  };
+
   return (
     <>
-      
       <Container color={themeColor[currTheme][0].background}>
-      <Popup trigger={<button> Trigger</button>} position="right center">
-        <div>Popup content here !!</div>
-      </Popup>
         <Scrollbars
           autoHide
           renderThumbVertical={renderThumb}
@@ -50,6 +50,8 @@ function QuestionPage() {
                 Qlink={questionList.Question_link}
                 solution={questionList.Solution_link}
                 topic={params.type}
+                isSolutionAccepted={acceptedSolutions[questionList.id] || false}
+                onSolutionAccepted={() => handleSolutionAccepted(questionList.id)} // Pass the function as a prop
               />
             );
           })}
@@ -59,6 +61,7 @@ function QuestionPage() {
     </>
   );
 }
+
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -68,4 +71,5 @@ const Container = styled.div`
   align-items: center;
   background-color: ${(props) => props.color};
 `;
+
 export default QuestionPage;

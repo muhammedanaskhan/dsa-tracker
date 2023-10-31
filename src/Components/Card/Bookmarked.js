@@ -96,6 +96,7 @@ function Bookmarked() {
                   Qlink={questionList.Q_link}
                   solution={questionList.Q_solution}
                   topic={questionList.Q_topic}
+                  isSolutionAccepted ={questionList.isSolutionAccepted}
                 />
               );
             })}

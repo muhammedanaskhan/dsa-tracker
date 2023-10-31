@@ -177,7 +177,10 @@ const Display = (props) => {
     props.onSolutionAccepted();
 
     // // Perform the action you want here (e.g., redirect to the solution)
-    window.open(props.solution, '_blank');
+    // window.location.href = props.solution;
+  };
+  const clickableIconStyle = {
+    cursor: 'pointer',
   };
   const unclickableIconStyle = {
     color: 'grey',
@@ -250,24 +253,26 @@ const Display = (props) => {
         <WrapperSolved
           bgcolor={themeColor[currTheme][0].questionpage}
           border={themeColor[currTheme][0].questionpageborder}
+          onClick={() => {
+            console.log(props.isSolutionAccepted);
+            console.log(checkIfSolved(props.id));
+            if (!props.isSolutionAccepted) {
+              handleClick(props.id);
+            }
+          }}
         >
-          {
-            props.isSolutionAccepted ? (
-              <ClearIcon style={{unclickableIconStyle}} />
-            ) : (checkIfSolved(props.id) ? (
-              <CheckIcon
-                style={{ color: themeColor[currTheme][0].checkBoxColor }}
-                onClick={() => {
-                  handleClick(props.id);
-                }}
-              />
-            ) : (
-              <ClearIcon style={{ color: "red" }}
+          {props.isSolutionAccepted ? (
+            <ClearIcon style={{unclickableIconStyle}} />
+          ) : (
+            <ClearIcon
+              style={{ color: 'red', cursor: props.isSolutionAccepted ? 'default' : 'pointer' }}
               onClick={() => {
-                handleClick(props.id);
-              }} />
-            ))
-          }
+                if (props.isSolutionAccepted) {
+                  handleClick(props.id);
+                }
+              }}
+            />
+          )}
         </WrapperSolved>
         <ToastContainer />
       </Grid>
